@@ -1,4 +1,4 @@
-const handItems = [...document.querySelectorAll(".hand-item ")];
+const handItems = [...document.querySelectorAll(".hand-item")];
 // console.log(handItems);
 const playBtn = document.querySelector(".main");
 const resetBtn = document.querySelector(".reset");

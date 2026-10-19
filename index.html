@@ -17,17 +17,17 @@
       <section class="hands">
         <h2 class="montserrat">Choose hand:</h2>
         <div class="hands-wrapper wrapper">
-          <div class="hand-item" data-handType="rock">
+          <div class="hand-item" data-handtype="rock">
             <div class="circle"></div>
             <img src="./img/rock.png" alt="rock" />
             <h3 class="rubik">Rock</h3>
           </div>
-          <div class="hand-item" data-handType="paper">
+          <div class="hand-item" data-handtype="paper">
             <div class="circle"></div>
             <img src="./img/paper.png" alt="paper" />
             <h3 class="rubik">Paper</h3>
           </div>
-          <div class="hand-item" data-handType="scissors">
+          <div class="hand-item" data-handtype="scissors">
             <div class="circle"></div>
             <img src="./img/scissors.png" alt="scissors" />
             <h3 class="rubik">Scissors</h3>
@@ -40,6 +40,12 @@
           <button class="reset">Reset</button>
         </div>
       </section>
+      <div class="result-popup" hidden>
+        <div class="popup-content">
+          <h2 class="result-title" id="result-title">YOU WIN!</h2>
+          <button class="next-game">Next game</button>
+        </div>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>

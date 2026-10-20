@@ -8,10 +8,11 @@ body {
   --main-color: #191b23;
   --green: #daf376;
   --orange: #ffae0c;
+  --red: tomato;
   --white: #f2f2f2;
 
   --light-dark: #20232b;
-  --light-dark-opacity: rgba(32, 35, 43, 0.9);
+  --light-dark-opacity: rgba(32, 35, 43, 0.5);
   --main-font: "Rubik Spray Paint";
   --secondary-font: "Montserrat", sans-serif;
   background-color: var(--main-color);
@@ -133,6 +134,12 @@ section {
 .hand-item.active .circle {
   background-color: var(--green);
 }
+.hand-item.siHand .circle {
+  background-color: var(--red);
+}
+.hand-item.orange .circle {
+  background-color: var(--orange);
+}
 
 .hand-item img {
   position: relative;
@@ -153,12 +160,14 @@ section {
   position: fixed;
   z-index: 10;
   display: flex;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
   padding: 20px;
   background-color: var(--light-dark-opacity);
-  border-radius: 24px;
-  border: 2px solid rgba(242, 242, 242, 0.25);
+  /* border-radius: 24px; */
+  /* border: 2px solid rgba(242, 242, 242, 0.25); */
 
   /* inset: 0; */
   top: 50%;
@@ -166,9 +175,9 @@ section {
   transform: translate(-50%, -50%);
 }
 
-/* .result-popup[hidden] {
+.hidden {
   display: none;
-} */
+}
 
 .popup-content {
   width: 620px;
@@ -179,6 +188,9 @@ section {
   justify-content: center;
   align-items: center;
   gap: 24px;
+  background-color: var(--light-dark);
+  border-radius: 24px;
+  border: 2px solid rgba(242, 242, 242, 0.25);
 }
 
 .result-title {

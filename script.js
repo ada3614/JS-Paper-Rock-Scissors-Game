@@ -1,7 +1,12 @@
 const handItems = [...document.querySelectorAll(".hand-item")];
 // console.log(handItems);
+
+const resultPopup = document.querySelector(".result-popup");
+const resultMsg = document.getElementById("result-title");
+
 const playBtn = document.querySelector(".main");
 const resetBtn = document.querySelector(".reset");
+const nextGameBtn = document.querySelector(".next-game");
 
 const handSelection = { playerHand: "", computerHand: "" };
 
@@ -10,30 +15,57 @@ const handleGame = () => {
     alert("choose hand");
     return;
   }
-  const computer = (handSelection.computerHand =
-    handItems[Math.floor(Math.random() * handItems.length)].dataset.handtype);
+  const siHandIndex = handItems[Math.floor(Math.random() * handItems.length)];
+  const computer = (handSelection.computerHand = siHandIndex.dataset.handtype);
   const player = handSelection.playerHand;
+  handItems.forEach((hand) => {
+    if (hand.dataset.handtype === siHandIndex.dataset.handtype) {
+      hand.classList.add("siHand");
+    }
+  });
   console.log(player);
   console.log(computer);
+  // console.log(handItems[siHandIndex]);
+  console.log(siHandIndex);
   if (player === computer) {
-    alert("DRAW");
+    resultMsg.innerHTML = "It's a draw";
+    resultMsg.style.color = "var(--orange)";
+    siHandIndex.classList.add("orange");
+    // resultPopup.classList.remove("hidden");
   } else if (
     (player === "rock" && computer === "scissors") ||
     (player === "paper" && computer === "rock") ||
     (player === "scissors" && computer === "paper")
   ) {
-    alert("WIN!!!!!");
+    resultMsg.innerHTML = "You Win!!!";
+
+    // resultPopup.classList.remove("hidden");
   } else {
-    alert("LOSE!!!!!!!");
+    resultMsg.innerHTML = "You Loose:/";
+    resultMsg.style.color = "var(--red)";
+    // resultPopup.classList.remove("hidden");
   }
+
+  resultPopup.classList.remove("hidden");
 };
 
-const resetGame = () => {
+// const resetGame = () => {
+//   handSelection.playerHand = "";
+//   handSelection.computerHand = "";
+//   handItems.forEach((hand) => {
+//     hand.classList.remove("active");
+//   });
+// };
+
+const nextGame = () => {
   handSelection.playerHand = "";
   handSelection.computerHand = "";
   handItems.forEach((hand) => {
     hand.classList.remove("active");
+    hand.classList.remove("orange");
+    hand.classList.remove("siHand");
   });
+  resultPopup.classList.add("hidden");
 };
 
 handItems.forEach((hand) => {
@@ -48,4 +80,5 @@ handItems.forEach((hand) => {
 });
 
 playBtn.addEventListener("click", handleGame);
-resetBtn.addEventListener("click", resetGame);
+// resetBtn.addEventListener("click", resetGame);
+nextGameBtn.addEventListener("click", nextGame);

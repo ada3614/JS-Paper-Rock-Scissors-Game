@@ -181,7 +181,7 @@ section {
 
 .popup-content {
   width: 620px;
-  height: 220px;
+  /* height: 220px; */
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
@@ -195,7 +195,21 @@ section {
 
 .result-title {
   font-family: var(--secondary-font);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 40px;
   color: var(--green);
+}
+
+.selected-hands {
+  font-family: var(--secondary-font);
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.green {
+  color: var(--green);
+  font-weight: 800;
+}
+.red {
+  color: var(--red);
 }

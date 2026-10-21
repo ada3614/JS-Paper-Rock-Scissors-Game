@@ -2,6 +2,7 @@ const handItems = [...document.querySelectorAll(".hand-item")];
 // console.log(handItems);
 
 const resultPopup = document.querySelector(".result-popup");
+const selectedHandsPopup = document.querySelector(".selected-hands");
 const resultMsg = document.getElementById("result-title");
 
 const playBtn = document.querySelector(".main");
@@ -10,7 +11,7 @@ const nextGameBtn = document.querySelector(".next-game");
 
 const handSelection = { playerHand: "", computerHand: "" };
 
-const handleGame = () => {
+const getSelection = () => {
   if (handSelection.playerHand === "") {
     alert("choose hand");
     return;
@@ -23,30 +24,60 @@ const handleGame = () => {
       hand.classList.add("siHand");
     }
   });
-  console.log(player);
-  console.log(computer);
+  handleGame(player, computer, siHandIndex);
+  // renderPopupHands(player, computer);
+};
+
+const renderPopupHands = (player, computer) => {
+  // selectedHandsPopup.innerHTML = `${player.dataset.handtype} vs. ${computer.dataset.handtype} `;
+  selectedHandsPopup.innerHTML = `
+            <span class="green">${player}</span>
+            vs.
+            <span class="red">${computer}</span>`;
+};
+
+const handleGame = (player, computer, siHandIndex) => {
+  // if (handSelection.playerHand === "") {
+  //   alert("choose hand");
+  //   return;
+  // }
+
+  // const siHandIndex = handItems[Math.floor(Math.random() * handItems.length)];
+  // const computer = (handSelection.computerHand = siHandIndex.dataset.handtype);
+  // const player = handSelection.playerHand;
+  // handItems.forEach((hand) => {
+  //   if (hand.dataset.handtype === siHandIndex.dataset.handtype) {
+  //     hand.classList.add("siHand");
+  //   }
+  // });
+  // console.log(player);
+  // console.log(computer);
   // console.log(handItems[siHandIndex]);
-  console.log(siHandIndex);
+  // console.log(siHandIndex);
+
   if (player === computer) {
-    resultMsg.innerHTML = "It's a draw";
+    resultMsg.innerHTML = "It's a draw 😑";
     resultMsg.style.color = "var(--orange)";
     siHandIndex.classList.add("orange");
     // resultPopup.classList.remove("hidden");
   } else if (
-    (player === "rock" && computer === "scissors") ||
-    (player === "paper" && computer === "rock") ||
-    (player === "scissors" && computer === "paper")
+    (player === "Rock" && computer === "Scissors") ||
+    (player === "Paper" && computer === "Rock") ||
+    (player === "Scissors" && computer === "Paper")
   ) {
-    resultMsg.innerHTML = "You Win!!!";
+    resultMsg.innerHTML = "You Win! 😎";
 
     // resultPopup.classList.remove("hidden");
   } else {
-    resultMsg.innerHTML = "You Loose:/";
+    resultMsg.innerHTML = "You Loose 💩";
     resultMsg.style.color = "var(--red)";
     // resultPopup.classList.remove("hidden");
   }
 
   resultPopup.classList.remove("hidden");
+  renderPopupHands(player, computer);
+  console.log(player);
+  console.log(computer);
 };
 
 // const resetGame = () => {
@@ -79,6 +110,6 @@ handItems.forEach((hand) => {
   });
 });
 
-playBtn.addEventListener("click", handleGame);
+playBtn.addEventListener("click", getSelection);
 // resetBtn.addEventListener("click", resetGame);
 nextGameBtn.addEventListener("click", nextGame);

@@ -10,6 +10,7 @@ body {
   --orange: #ffae0c;
   --red: tomato;
   --white: #f2f2f2;
+  --grey: #404040;
 
   --light-dark: #20232b;
   --light-dark-opacity: rgba(32, 35, 43, 0.5);
@@ -87,7 +88,7 @@ button:hover {
 /* header */
 
 header {
-  margin: 80px auto;
+  margin: 60px auto;
 }
 section {
   margin-top: 80px;
@@ -212,4 +213,59 @@ section {
 }
 .red {
   color: var(--red);
+}
+
+/* RESULTS SECTION */
+
+.results h2 {
+  font-size: 48px;
+}
+
+.results-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.result-item {
+  width: 160px;
+  height: 160px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  background-color: var(--light-dark);
+  border: 2px solid var(--grey);
+  border-radius: 24px;
+}
+
+.value {
+  /* font-family: "Rubik Spray Paint"; */
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+}
+.result-name {
+  /* font-family: "Rubik Spray Paint"; */
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.result-item:nth-child(1) {
+  color: var(--green);
+  border-color: var(--green);
+}
+.result-item:nth-child(2) {
+  color: var(--red);
+  border-color: var(--red);
+}
+.result-item:nth-child(3) {
+  color: var(--orange);
+  border-color: var(--orange);
 }

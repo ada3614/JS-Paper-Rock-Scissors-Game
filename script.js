@@ -9,7 +9,14 @@ const playBtn = document.querySelector(".main");
 const resetBtn = document.querySelector(".reset");
 const nextGameBtn = document.querySelector(".next-game");
 
+const resultWins = document.getElementById("result-item-wins");
+const resultLoses = document.getElementById("result-item-loses");
+const resultDraws = document.getElementById("result-item-draws");
+const resultTotal = document.getElementById("result-item-total");
+
 const handSelection = { playerHand: "", computerHand: "" };
+
+const gameStats = { wins: 0, loses: 0, draws: 0, total: 0 };
 
 const getSelection = () => {
   if (handSelection.playerHand === "") {
@@ -59,6 +66,7 @@ const handleGame = (player, computer, siHandIndex) => {
     resultMsg.innerHTML = "It's a draw 😑";
     resultMsg.style.color = "var(--orange)";
     siHandIndex.classList.add("orange");
+    gameStats.draws++;
     // resultPopup.classList.remove("hidden");
   } else if (
     (player === "Rock" && computer === "Scissors") ||
@@ -66,18 +74,29 @@ const handleGame = (player, computer, siHandIndex) => {
     (player === "Scissors" && computer === "Paper")
   ) {
     resultMsg.innerHTML = "You Win! 😎";
+    resultMsg.style.color = "var(--green)";
+    gameStats.wins++;
 
     // resultPopup.classList.remove("hidden");
   } else {
     resultMsg.innerHTML = "You Loose 💩";
     resultMsg.style.color = "var(--red)";
+    gameStats.loses++;
     // resultPopup.classList.remove("hidden");
   }
-
+  gameStats.total++;
   resultPopup.classList.remove("hidden");
   renderPopupHands(player, computer);
+  updateResults();
   console.log(player);
   console.log(computer);
+};
+
+const updateResults = () => {
+  resultWins.innerHTML = gameStats.wins;
+  resultLoses.innerHTML = gameStats.loses;
+  resultDraws.innerHTML = gameStats.draws;
+  resultTotal.innerHTML = gameStats.total;
 };
 
 // const resetGame = () => {

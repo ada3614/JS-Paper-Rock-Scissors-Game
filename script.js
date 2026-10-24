@@ -32,11 +32,9 @@ const getSelection = () => {
     }
   });
   handleGame(player, computer, siHandIndex);
-  // renderPopupHands(player, computer);
 };
 
 const renderPopupHands = (player, computer) => {
-  // selectedHandsPopup.innerHTML = `${player.dataset.handtype} vs. ${computer.dataset.handtype} `;
   selectedHandsPopup.innerHTML = `
             <span class="green">${player}</span>
             vs.
@@ -44,24 +42,6 @@ const renderPopupHands = (player, computer) => {
 };
 
 const handleGame = (player, computer, siHandIndex) => {
-  // if (handSelection.playerHand === "") {
-  //   alert("choose hand");
-  //   return;
-  // }
-
-  // const siHandIndex = handItems[Math.floor(Math.random() * handItems.length)];
-  // const computer = (handSelection.computerHand = siHandIndex.dataset.handtype);
-  // const player = handSelection.playerHand;
-  // handItems.forEach((hand) => {
-  //   if (hand.dataset.handtype === siHandIndex.dataset.handtype) {
-  //     hand.classList.add("siHand");
-  //   }
-  // });
-  // console.log(player);
-  // console.log(computer);
-  // console.log(handItems[siHandIndex]);
-  // console.log(siHandIndex);
-
   if (player === computer) {
     resultMsg.innerHTML = "It's a draw 😑";
     resultMsg.style.color = "var(--orange)";
@@ -76,13 +56,10 @@ const handleGame = (player, computer, siHandIndex) => {
     resultMsg.innerHTML = "You Win! 😎";
     resultMsg.style.color = "var(--green)";
     gameStats.wins++;
-
-    // resultPopup.classList.remove("hidden");
   } else {
     resultMsg.innerHTML = "You Loose 💩";
     resultMsg.style.color = "var(--red)";
     gameStats.loses++;
-    // resultPopup.classList.remove("hidden");
   }
   gameStats.total++;
   resultPopup.classList.remove("hidden");
@@ -98,14 +75,6 @@ const updateResults = () => {
   resultDraws.innerHTML = gameStats.draws;
   resultTotal.innerHTML = gameStats.total;
 };
-
-// const resetGame = () => {
-//   handSelection.playerHand = "";
-//   handSelection.computerHand = "";
-//   handItems.forEach((hand) => {
-//     hand.classList.remove("active");
-//   });
-// };
 
 const nextGame = () => {
   handSelection.playerHand = "";
@@ -125,10 +94,8 @@ handItems.forEach((hand) => {
     });
     hand.classList.add("active");
     handSelection.playerHand = hand.dataset.handtype;
-    // console.log(handSelection.playerHand);
   });
 });
 
 playBtn.addEventListener("click", getSelection);
-// resetBtn.addEventListener("click", resetGame);
 nextGameBtn.addEventListener("click", nextGame);

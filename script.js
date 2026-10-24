@@ -91,8 +91,13 @@ handItems.forEach((hand) => {
   hand.addEventListener("click", () => {
     handItems.forEach((item) => {
       item.classList.remove("active");
+      item.querySelector("img").classList.remove("pulse");
     });
     hand.classList.add("active");
+    hand.querySelector("img").classList.add("pulse");
+    // const img = hand.querySelector("img");
+    // console.log(img);
+    // img.classList.add("pulse");
     handSelection.playerHand = hand.dataset.handtype;
   });
 });

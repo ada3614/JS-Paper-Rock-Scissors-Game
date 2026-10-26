@@ -6,32 +6,74 @@ const selectedHandsPopup = document.querySelector(".selected-hands");
 const resultMsg = document.getElementById("result-title");
 
 const playBtn = document.querySelector(".main");
-const resetBtn = document.querySelector(".reset");
+// const resetBtn = document.querySelector(".reset");
 const nextGameBtn = document.querySelector(".next-game");
 
 const resultWins = document.getElementById("result-item-wins");
-const resultLoses = document.getElementById("result-item-loses");
+const resultLosses = document.getElementById("result-item-losses");
 const resultDraws = document.getElementById("result-item-draws");
 const resultTotal = document.getElementById("result-item-total");
 
 const handSelection = { playerHand: "", computerHand: "" };
 
-const gameStats = { wins: 0, loses: 0, draws: 0, total: 0 };
+const gameStats = { wins: 0, losses: 0, draws: 0, total: 0 };
 
 const getSelection = () => {
   if (handSelection.playerHand === "") {
-    alert("choose hand");
+    alert("Choose a hand first!");
     return;
   }
-  const siHandIndex = handItems[Math.floor(Math.random() * handItems.length)];
-  const computer = (handSelection.computerHand = siHandIndex.dataset.handtype);
-  const player = handSelection.playerHand;
-  handItems.forEach((hand) => {
-    if (hand.dataset.handtype === siHandIndex.dataset.handtype) {
-      hand.classList.add("siHand");
-    }
-  });
-  handleGame(player, computer, siHandIndex);
+
+  const computerHandElement =
+    handItems[Math.floor(Math.random() * handItems.length)];
+
+  const computerHand = computerHandElement.dataset.handtype;
+  const playerHand = handSelection.playerHand;
+
+  computerHandElement.classList.add("siChoice");
+
+  handleGame(playerHand, computerHand, computerHandElement);
+};
+
+const handleGame = (playerHand, computerHand, computerHandElement) => {
+  const result = determineWinner(playerHand, computerHand);
+  resultMsg.classList.remove("result-title--draw");
+  resultMsg.classList.remove("result-title--win");
+  resultMsg.classList.remove("result-title--lose");
+  if (result === "draw") {
+    resultMsg.textContent = "It's a draw 😑";
+    resultMsg.classList.add("result-title--draw");
+    computerHandElement.classList.add("draw");
+    gameStats.draws++;
+  } else if (result === "win") {
+    resultMsg.textContent = "You Win! 😎";
+    resultMsg.classList.add("result-title--win");
+    gameStats.wins++;
+  } else {
+    resultMsg.textContent = "You Lose 💩";
+    resultMsg.classList.add("result-title--lose");
+    gameStats.losses++;
+  }
+  gameStats.total++;
+  resultPopup.classList.remove("hidden");
+  renderPopupHands(playerHand, computerHand);
+  updateResults();
+};
+
+const determineWinner = (playerHand, computerHand) => {
+  if (playerHand === computerHand) {
+    return "draw";
+  }
+
+  if (
+    (playerHand === "Rock" && computerHand === "Scissors") ||
+    (playerHand === "Paper" && computerHand === "Rock") ||
+    (playerHand === "Scissors" && computerHand === "Paper")
+  ) {
+    return "win";
+  }
+
+  return "lose";
 };
 
 const renderPopupHands = (player, computer) => {
@@ -41,63 +83,31 @@ const renderPopupHands = (player, computer) => {
             <span class="red">${computer}</span>`;
 };
 
-const handleGame = (player, computer, siHandIndex) => {
-  if (player === computer) {
-    resultMsg.innerHTML = "It's a draw 😑";
-    resultMsg.style.color = "var(--orange)";
-    siHandIndex.classList.add("orange");
-    gameStats.draws++;
-    // resultPopup.classList.remove("hidden");
-  } else if (
-    (player === "Rock" && computer === "Scissors") ||
-    (player === "Paper" && computer === "Rock") ||
-    (player === "Scissors" && computer === "Paper")
-  ) {
-    resultMsg.innerHTML = "You Win! 😎";
-    resultMsg.style.color = "var(--green)";
-    gameStats.wins++;
-  } else {
-    resultMsg.innerHTML = "You Loose 💩";
-    resultMsg.style.color = "var(--red)";
-    gameStats.loses++;
-  }
-  gameStats.total++;
-  resultPopup.classList.remove("hidden");
-  renderPopupHands(player, computer);
-  updateResults();
-  console.log(player);
-  console.log(computer);
-};
-
 const updateResults = () => {
-  resultWins.innerHTML = gameStats.wins;
-  resultLoses.innerHTML = gameStats.loses;
-  resultDraws.innerHTML = gameStats.draws;
-  resultTotal.innerHTML = gameStats.total;
+  resultWins.textContent = gameStats.wins;
+  resultLosses.textContent = gameStats.losses;
+  resultDraws.textContent = gameStats.draws;
+  resultTotal.textContent = gameStats.total;
 };
 
 const nextGame = () => {
   handSelection.playerHand = "";
   handSelection.computerHand = "";
   handItems.forEach((hand) => {
-    hand.classList.remove("active");
-    hand.classList.remove("orange");
-    hand.classList.remove("siHand");
+    hand.classList.remove("playerChoice", "draw", "siChoice", "pulse");
   });
+
   resultPopup.classList.add("hidden");
 };
 
 handItems.forEach((hand) => {
   hand.addEventListener("click", () => {
     handItems.forEach((item) => {
-      item.classList.remove("active");
+      item.classList.remove("playerChoice");
       item.querySelector("img").classList.remove("pulse");
     });
-    hand.classList.add("active");
+    hand.classList.add("playerChoice");
     hand.querySelector("img").classList.add("pulse");
-    // const img = hand.querySelector("img");
-    // console.log(img);
-    // img.classList.add("pulse");
     handSelection.playerHand = hand.dataset.handtype;
   });
 });

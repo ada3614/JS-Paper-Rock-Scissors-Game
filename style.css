@@ -4,18 +4,30 @@
   box-sizing: border-box;
 }
 
-body {
+:root {
   --main-color: #191b23;
   --green: #daf376;
   --orange: #ffae0c;
   --red: tomato;
   --white: #f2f2f2;
   --grey: #404040;
-
   --light-dark: #20232b;
   --light-dark-opacity: rgba(32, 35, 43, 0.5);
   --main-font: "Rubik Spray Paint";
   --secondary-font: "Montserrat", sans-serif;
+}
+
+body {
+  /* --main-color: #191b23;
+  --green: #daf376;
+  --orange: #ffae0c;
+  --red: tomato;
+  --white: #f2f2f2;
+  --grey: #404040;
+  --light-dark: #20232b;
+  --light-dark-opacity: rgba(32, 35, 43, 0.5);
+  --main-font: "Rubik Spray Paint";
+  --secondary-font: "Montserrat", sans-serif; */
   background-color: var(--main-color);
   color: var(--white);
 }
@@ -44,10 +56,10 @@ h2 {
   font-size: 24px;
   font-weight: 600;
 }
-img {
+/* img {
   width: 180px;
   height: 380px;
-}
+} */
 button {
   width: 180px;
   height: 54px;
@@ -59,11 +71,15 @@ button {
   outline: none;
   border: none;
   cursor: pointer;
-  transition: all 0.5s;
+  /* transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease; */
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  opacity: 0.6;
+  /* opacity: 0.6; */
+  background-color: #697539;
 }
 
 .reset,
@@ -76,12 +92,13 @@ button:hover {
   background-color: var(--light-dark);
   opacity: 1;
 }
+
 /* main container */
 
 .container {
   max-width: 1200px;
-  height: 100vh;
-  margin: auto;
+  min-height: 100vh;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -132,17 +149,19 @@ section {
   transition: background-color 0.3s ease;
 }
 
-.hand-item.active .circle {
+.hand-item.playerChoice .circle {
   background-color: var(--green);
 }
-.hand-item.siHand .circle {
+.hand-item.siChoice .circle {
   background-color: var(--red);
 }
-.hand-item.orange .circle {
+.hand-item.draw .circle {
   background-color: var(--orange);
 }
 
 .hand-item img {
+  width: 180px;
+  height: 380px;
   position: relative;
   z-index: 1;
   object-fit: contain;
@@ -198,7 +217,18 @@ section {
   font-family: var(--secondary-font);
   font-weight: 800;
   font-size: 40px;
+}
+
+.result-title--win {
   color: var(--green);
+}
+
+.result-title--lose {
+  color: var(--red);
+}
+
+.result-title--draw {
+  color: var(--orange);
 }
 
 .selected-hands {
@@ -244,14 +274,12 @@ section {
 }
 
 .value {
-  /* font-family: "Rubik Spray Paint"; */
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--secondary-font);
   font-weight: 800;
   font-size: 48px;
 }
 .result-name {
-  /* font-family: "Rubik Spray Paint"; */
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--secondary-font);
   font-weight: 400;
   font-size: 20px;
   line-height: 1;

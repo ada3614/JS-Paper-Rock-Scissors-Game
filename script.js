@@ -34,27 +34,25 @@ class Game {
       return null;
     }
     this.getComputerHand();
+
     const result = this.determineWinner();
-    console.log(this.playerHand, this.computerHand);
-    console.log(result);
+
     if (result === "draw") {
-      console.log("It's a draw!");
       this.gameStats.draws++;
     } else if (result === "win") {
-      console.log("You Win! 😎");
       this.gameStats.wins++;
     } else {
-      console.log("You Lose 💩");
       this.gameStats.losses++;
     }
     this.gameStats.total++;
-
-    return {
+    const round = {
       playerHand: this.playerHand,
       computerHand: this.computerHand,
       result: result,
-      stats: this.gameStats,
+      stats: { ...this.gameStats },
     };
+    this.resetRound();
+    return round;
   }
   resetRound() {
     this.playerHand = "";
@@ -98,22 +96,29 @@ class GameUI {
   }
   handleHandSelection(hand) {
     this.game.selectHand(hand);
-    // this.game.getComputerHand();
-    console.log(hand);
   }
+
   handlePlay() {
     const round = this.game.play();
     if (round === null) {
       alert("Choose a hand first!");
       return;
     }
-    console.log(round);
     this.updateStats(round);
-    this.game.resetRound();
-    this.popup.updateResultMsg(round.result);
-    this.popup.renderPopupHands(round.playerHand, round.computerHand);
-    // console.log(round.result);
+    this.showComputerChoice(round);
+    this.popup.show(round);
   }
+
+  showComputerChoice(round) {
+    const computerHandElem = this.handItems.find(
+      (hand) => hand.dataset.handtype === round.computerHand,
+    );
+    computerHandElem.classList.add("siChoice");
+    if (round.result === "draw") {
+      computerHandElem.classList.add("draw");
+    }
+  }
+
   updateStats(round) {
     this.resultWins.textContent = round.stats.wins;
     this.resultLosses.textContent = round.stats.losses;
@@ -128,19 +133,23 @@ class GameUI {
   }
 }
 
-class RenderPopup {
+class ResultPopup {
   constructor() {
     this.resultPopup = document.querySelector(".result-popup");
     this.selectedHandsPopup = document.querySelector(".selected-hands");
     this.resultMsg = document.getElementById("result-title");
-    // this.nextGameBtn = document.querySelector(".next-game");
+  }
 
-    // this.nextGameBtn.addEventListener("click", this.nextGame.bind(this));
+  show(round) {
+    this.updateResultMsg(round.result);
+    this.renderPopupHands(round.playerHand, round.computerHand);
   }
   updateResultMsg(result) {
-    this.resultMsg.classList.remove("result-title--draw");
-    this.resultMsg.classList.remove("result-title--win");
-    this.resultMsg.classList.remove("result-title--lose");
+    this.resultMsg.classList.remove(
+      "result-title--draw",
+      "result-title--win",
+      "result-title--lose",
+    );
     if (result === "draw") {
       this.resultMsg.textContent = "It's a draw 😑";
       this.resultMsg.classList.add("result-title--draw");
@@ -153,12 +162,7 @@ class RenderPopup {
     }
     this.resultPopup.classList.remove("hidden");
   }
-  // nextGame(handItems) {
-  //   handItems.forEach((hand) => {
-  //     hand.classList.remove("playerChoice", "draw", "siChoice", "pulse");
-  //   });
-  //   this.resultPopup.classList.add("hidden");
-  // }
+
   renderPopupHands(player, computer) {
     this.selectedHandsPopup.innerHTML = `
             <span class="green">${player}</span>
@@ -168,5 +172,5 @@ class RenderPopup {
 }
 
 const game = new Game();
-const popup = new RenderPopup();
+const popup = new ResultPopup();
 const ui = new GameUI(game, popup);
